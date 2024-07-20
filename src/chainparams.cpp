@@ -134,7 +134,7 @@ public:
         consensus.powLimit = uint256S("0000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.posLimit = uint256S("00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.nPowTargetTimespan = 16 * 60; // 16 minutes
-        consensus.nPowTargetSpacing = 2 * 64;
+        consensus.nPowTargetSpacing = 32;
         consensus.fPowAllowMinDifficultyBlocks = false;
         consensus.fPowNoRetargeting = true;
         consensus.fPoSNoRetargeting = false;
@@ -210,8 +210,8 @@ public:
         vSeeds.push_back(CDNSSeedData("qtum3.dynu.net", "qtum3.dynu.net", false)); // Qtum mainnet
 
 
-        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,58);
-        base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,50);
+        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,50);
+        base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,20);
         base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1,128);
         base58Prefixes[EXT_PUBLIC_KEY] = boost::assign::list_of(0x04)(0x88)(0xB2)(0x1E).convert_to_container<std::vector<unsigned char> >();
         base58Prefixes[EXT_SECRET_KEY] = boost::assign::list_of(0x04)(0x88)(0xAD)(0xE4).convert_to_container<std::vector<unsigned char> >();
@@ -237,7 +237,7 @@ public:
             0         // * estimated number of transactions per second after that timestamp
         };
         consensus.nLastPOWBlock = 5000;
-        consensus.nMPoSRewardRecipients = 10;
+        consensus.nMPoSRewardRecipients = 1;
         consensus.nFirstMPoSBlock = consensus.nLastPOWBlock + 
                                     consensus.nMPoSRewardRecipients + 
                                     COINBASE_MATURITY;
@@ -328,8 +328,8 @@ public:
         //vSeeds.push_back(CDNSSeedData("testnetbitcoin.jonasschnelli.ch", "testnet-seed.bitcoin.jonasschnelli.ch", true));
 
 
-        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,120);
-        base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,110);
+        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,111);
+        base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,196);
         base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1,239);
         base58Prefixes[EXT_PUBLIC_KEY] = boost::assign::list_of(0x04)(0x35)(0x87)(0xCF).convert_to_container<std::vector<unsigned char> >();
         base58Prefixes[EXT_SECRET_KEY] = boost::assign::list_of(0x04)(0x35)(0x83)(0x94).convert_to_container<std::vector<unsigned char> >();
@@ -400,10 +400,10 @@ public:
         // By default assume that the signatures in ancestors of this block are valid.
         consensus.defaultAssumeValid = uint256S("0x00");
 
-        pchMessageStart[0] = 0xfd;
-        pchMessageStart[1] = 0xdd;
-        pchMessageStart[2] = 0xc6;
-        pchMessageStart[3] = 0xe1;
+        pchMessageStart[0] = 0x85;
+        pchMessageStart[1] = 0x8c;
+        pchMessageStart[2] = 0x8c;
+        pchMessageStart[3] = 0xdc;
         nDefaultPort = 23888;
         nPruneAfterHeight = 1000;
 
@@ -459,8 +459,8 @@ public:
         consensus.nMPoSRewardRecipients = 10;
         consensus.nFirstMPoSBlock = 5000;
 
-        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,120);
-        base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,110);
+        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,20);
+        base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,196);
         base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1,239);
         base58Prefixes[EXT_PUBLIC_KEY] = boost::assign::list_of(0x04)(0x35)(0x87)(0xCF).convert_to_container<std::vector<unsigned char> >();
         base58Prefixes[EXT_SECRET_KEY] = boost::assign::list_of(0x04)(0x35)(0x83)(0x94).convert_to_container<std::vector<unsigned char> >();
