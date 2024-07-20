@@ -101,7 +101,7 @@ jobs:
         with:
           name: qtum-${{ github.sha }}-${{ matrix.name }}
           path: |
-            depends/${{ matrix.host }}/bin/qtum1*
+            depends/${{ matrix.host }}/bin/qtum*
             dist/qtum-Qt.app
           if-no-files-found: error
           retention-days: 7
