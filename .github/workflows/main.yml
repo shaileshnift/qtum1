@@ -82,7 +82,7 @@ jobs:
         run: |
           chmod -R 777 depends
           make $MAKEJOBS -C depends HOST=${{ matrix.host }} ${{ matrix.dep-opts }}
-      - name: Build uidd
+      - name: Build qtum
         run: |
           chmod -R 777 .
           ./autogen.sh
@@ -99,15 +99,15 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: uidd-${{ github.sha }}-${{ matrix.name }}
+          name: qtum-${{ github.sha }}-${{ matrix.name }}
           path: |
-            depends/${{ matrix.host }}/bin/uidd*
-            dist/uidd-Qt.app
+            depends/${{ matrix.host }}/bin/qtum1*
+            dist/qtum-Qt.app
           if-no-files-found: error
           retention-days: 7
 
       - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
-          name: uidd-${{ github.sha }}-${{ matrix.name }}
+          name: qtum-${{ github.sha }}-${{ matrix.name }}
 
