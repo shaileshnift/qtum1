@@ -1,1 +1,113 @@
+name: CI
+
+on:
+  push:
+    paths-ignore:
+      - '**/*.md'
+  pull_request:
+    paths-ignore:
+      - 'doc/**'
+      - 'contrib/**'
+      - '**/*.md'
+
+jobs:
+  build:
+    name: ${{ matrix.name }}
+
+    env:
+      MAKEJOBS: "-j4"
+      CHECK_DOC: "0"
+      SDK_URL: https://bitcoincore.org/depends-sources/sdks
+
+    strategy:
+      fail-fast: false
+      matrix:
+        name:
+          - linux-64-bit
+        include:
+          - name: linux-64-bit
+            host: x86_64-pc-linux-gnu
+            os: ubuntu-20.04
+            packages: ""
+            check-security: false
+            check-symbols: false
+            dep-opts: ""
+            config-opts: "LDFLAGS=-static-libstdc++"
+            goal: install
+            
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Add architecture
+        if: ${{ matrix.arch }}
+        run: |
+          sudo dpkg --add-architecture "${{ matrix.arch }}"
+      - name: Install packages
+        run: |
+          sudo apt-get update
+          sudo apt-get install make automake cmake curl g++-multilib libtool binutils bsdmainutils pkg-config python3 patch bison
+          sudo apt-get install ${{ matrix.packages }}
+      - name: Post install
+        if: ${{ matrix.postinstall }}
+        run: ${{ matrix.postinstall }}
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: SDK cache
+        if: ${{ matrix.sdk }}
+        uses: actions/cache@v4
+        env:
+          cache-name: sdk
+        with:
+          path: ./depends/sdk-sources
+          key: ${{ matrix.name }}-${{ env.cache-name }}
+
+      - name: Install SDK
+        if: ${{ matrix.sdk }}
+        run: |
+          mkdir -p ./depends/sdk-sources
+          mkdir -p ./depends/SDKs
+          curl --location --fail $SDK_URL/Xcode-${{ matrix.sdk }}-extracted-SDK-with-libcxx-headers.tar.gz -o depends/sdk-sources/Xcode-${{ matrix.sdk }}-extracted-SDK-with-libcxx-headers.tar.gz
+          tar -C depends/SDKs -xf depends/sdk-sources/Xcode-${{ matrix.sdk }}-extracted-SDK-with-libcxx-headers.tar.gz
+      - name: Dependency cache
+        uses: actions/cache@v4
+        env:
+          cache-name: depends
+        with:
+          path: ./depends/built
+          key: ${{ matrix.name }}-${{ env.cache-name }}-${{ hashFiles('depends/packages/*') }}
+
+      - name: Build depends
+        run: |
+          chmod -R 777 depends
+          make $MAKEJOBS -C depends HOST=${{ matrix.host }} ${{ matrix.dep-opts }}
+      - name: Build uidd
+        run: |
+          chmod -R 777 .
+          ./autogen.sh
+          ./configure --prefix=`pwd`/depends/${{ matrix.host }} ${{ matrix.config-opts }} || ( cat config.log && false)
+          make $MAKEJOBS ${{ matrix.goal }} || ( echo "Build failure. Verbose build follows." && make ${{ matrix.goal }} V=1 ; false )
+      - name: Check security
+        if: ${{ matrix.check-security }}
+        run: make -C src check-security
+
+      - name: Check symbols
+        if: ${{ matrix.check-symbols }}
+        run: make -C src check-symbols
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: uidd-${{ github.sha }}-${{ matrix.name }}
+          path: |
+            depends/${{ matrix.host }}/bin/uidd*
+            dist/uidd-Qt.app
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: uidd-${{ github.sha }}-${{ matrix.name }}
 
