@@ -6,11 +6,11 @@
 #include "validation.h"
 #include "utilstrencodings.h"
 
-static const dev::Address GasScheduleDGP = dev::Address("0000000000000000000000000000000000000080");
-static const dev::Address BlockSizeDGP = dev::Address("0000000000000000000000000000000000000081");
-static const dev::Address GasPriceDGP = dev::Address("0000000000000000000000000000000000000082");
-static const dev::Address DGPCONTRACT4 = dev::Address("0000000000000000000000000000000000000083");
-static const dev::Address BlockGasLimitDGP = dev::Address("0000000000000000000000000000000000000084");
+static const dev::Address GasScheduleDGP = dev::Address("0000000000000000000000000000000000000090");
+static const dev::Address BlockSizeDGP = dev::Address("0000000000000000000000000000000000000091");
+static const dev::Address GasPriceDGP = dev::Address("0000000000000000000000000000000000000092");
+static const dev::Address DGPCONTRACT4 = dev::Address("0000000000000000000000000000000000000093");
+static const dev::Address BlockGasLimitDGP = dev::Address("0000000000000000000000000000000000000094");
 
 static const uint32_t MIN_BLOCK_SIZE_DGP = 500000;
 static const uint32_t MAX_BLOCK_SIZE_DGP = 32000000;
