@@ -173,11 +173,11 @@ public:
         nDefaultPort = 3888;
         nPruneAfterHeight = 100000;
 
-        genesis = CreateGenesisBlock(1720297800, 53850, 0x1f00ffff, 1, 50 * COIN);
+        genesis = CreateGenesisBlock(1722834000, 53850, 0x1f00ffff, 1, 50 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
         assert(consensus.hashGenesisBlock == uint256S("0x0000221fe8c370a0b290a7eaceb41553da991551fe5c15433dd14876aaf644f5"));
         assert(genesis.hashMerkleRoot == uint256S("0xa8b45fcf4eea6cdff03ece17d8bd22f881937509a22552f052e47ea7be863ad4"));
-/*/
+
 //Debug Mainnet
         //startNewChain = true;
 
@@ -294,12 +294,12 @@ public:
         nDefaultPort = 13888;
         nPruneAfterHeight = 1000;
 
-        genesis = CreateGenesisBlock(1720297800, 53850, 0x1f00ffff, 1, 50 * COIN);
+        genesis = CreateGenesisBlock(1722834000, 53850, 0x1f00ffff, 1, 50 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
         assert(consensus.hashGenesisBlock == uint256S("0x0000221fe8c370a0b290a7eaceb41553da991551fe5c15433dd14876aaf644f5"));
         assert(genesis.hashMerkleRoot == uint256S("0xa8b45fcf4eea6cdff03ece17d8bd22f881937509a22552f052e47ea7be863ad4"));
 
-/*/
+
 //Debug Testnet
         //startNewChain = true;
 		
@@ -412,11 +412,11 @@ public:
         assert(consensus.hashGenesisBlock == uint256S("0x460f53317a145dd6acf72aa681548df8c65cb433f4691cda44e7d94f63fcef61"));
         assert(genesis.hashMerkleRoot == uint256S("0xa8b45fcf4eea6cdff03ece17d8bd22f881937509a22552f052e47ea7be863ad4"));
 
-/*/
+
 //Debug Regtest
         //startNewChain = true;
 		
-        genesis = CreateGenesisBlock(1720297800, 17, 0x207fffff, 1, 50 * COIN);// Change time and set nonce = any number
+        genesis = CreateGenesisBlock(1722834000, 17, 0x207fffff, 1, 50 * COIN);// Change time and set nonce = any number
 
         //if (startNewChain)
             MineGenesis(genesis, consensus.powLimit, false);
